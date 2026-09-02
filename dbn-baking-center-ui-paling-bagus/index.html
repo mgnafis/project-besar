@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBN Baking Center — Kelas Baking Online</title>
+<meta name="description" content="Marketplace kelas baking online. Belajar membuat croissant, roti, cake, dan pastry dari instruktur berpengalaman, langsung dari dapur sendiri.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --cream:#FBF6EF;
+    --cream-deep:#F4EBDD;
+    --red:#8F1626;
+    --red-vivid:#D81F2E;
+    --gold:#B4863A;
+    --gold-light:#E4C77A;
+    --ink:#211C18;
+    --ink-soft:#4A423B;
+    --line:rgba(33,28,24,0.12);
+    --gold-line:rgba(180,134,58,0.45);
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  button{font-family:inherit;cursor:pointer;}
+
+  h1,h2,h3,h4{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+
+  :focus-visible{outline:2px solid var(--red-vivid);outline-offset:3px;}
+
+  /* ---------- NAV ---------- */
+  header.site-nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:0 32px;
+    display:flex;align-items:center;justify-content:space-between;
+    height:76px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:44px;width:auto;background:#fff;}
+  .nav-links{display:flex;align-items:center;gap:36px;}
+  .nav-links a{
+    font-size:15px;font-weight:600;color:var(--ink-soft);
+    position:relative;padding:4px 0;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;left:0;right:100%;bottom:-2px;height:2px;
+    background:var(--gold);transition:right .25s ease;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a:hover::after{right:0;}
+  .nav-actions{display:flex;align-items:center;gap:18px;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-weight:700;font-size:14.5px;
+    padding:12px 24px;
+    border-radius:2px;
+    border:1px solid transparent;
+    transition:transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-ghost{color:var(--ink);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--ink);}
+  .btn-solid{background:var(--red-vivid);color:#fff;}
+  .btn-solid:hover{background:var(--red);}
+  .btn-outline-gold{color:var(--ink);border-color:var(--gold);}
+  .btn-outline-gold:hover{background:var(--gold);color:#fff;}
+  .link-plain{font-size:14.5px;font-weight:700;color:var(--ink-soft);}
+
+  .nav-toggle{display:none;background:none;border:0;padding:8px;}
+  .nav-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:.25s;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--cream);
+    padding:76px 0 0;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+    padding-bottom:64px;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:13.5px;font-weight:700;color:var(--red);
+    margin-bottom:22px;
+  }
+  .eyebrow .dot{width:6px;height:6px;background:var(--gold);border-radius:50%;}
+  .hero h1{
+    font-size:clamp(38px,4.6vw,58px);
+    line-height:1.06;
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:italic;font-weight:500;color:var(--red);
+  }
+  .hero p.lead{
+    font-size:18px;color:var(--ink-soft);max-width:46ch;margin-bottom:34px;
+  }
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px;}
+  .hero-media{position:relative;}
+  .hero-media .frame{
+    position:relative;
+    border-radius:220px 220px 24px 24px;
+    overflow:hidden;
+    aspect-ratio:4/5;
+    border:1px solid var(--gold-line);
+  }
+  .hero-media .frame img{width:100%;height:100%;object-fit:cover;}
+  .hero-media .badge{
+    position:absolute;left:-18px;bottom:34px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    padding:16px 20px;
+    max-width:210px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .hero-media .badge .num{
+    font-family:'Fraunces',serif;font-size:26px;color:var(--red);font-weight:600;
+  }
+  .hero-media .badge .txt{font-size:12.5px;color:var(--ink-soft);line-height:1.35;}
+
+  .stat-strip{
+    border-top:1px solid var(--gold-line);
+    padding:30px 0;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:24px;
+  }
+  .stat-strip .stat{
+    display:flex;flex-direction:column;gap:4px;
+    padding-right:24px;
+    border-right:1px solid var(--line);
+    flex:1;
+    min-width:140px;
+  }
+  .stat-strip .stat:last-child{border-right:none;}
+  .stat-strip .num{
+    font-family:'Fraunces',serif;font-size:34px;font-weight:600;color:var(--ink);
+  }
+  .stat-strip .num span{color:var(--red);}
+  .stat-strip .label{font-size:13.5px;color:var(--ink-soft);}
+
+  /* ---------- SECTION HEADS ---------- */
+  section{padding:96px 0;}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:32px;margin-bottom:52px;flex-wrap:wrap;
+  }
+  .section-head .kicker{
+    font-size:13.5px;font-weight:700;color:var(--red);margin-bottom:12px;display:block;
+  }
+  .section-head h2{font-size:clamp(28px,3.2vw,40px);max-width:16ch;}
+  .section-head p{color:var(--ink-soft);max-width:38ch;font-size:15.5px;}
+
+  /* ---------- KENAPA (no cards, divided list) ---------- */
+  .why-list{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
+  .why-item{
+    padding:0 32px;
+    border-left:1px solid var(--line);
+  }
+  .why-item:first-child{border-left:none;padding-left:0;}
+  .why-item:last-child{padding-right:0;}
+  .why-icon{margin-bottom:22px;}
+  .why-icon svg{width:38px;height:38px;stroke:var(--red);}
+  .why-item h3{font-size:20px;margin-bottom:10px;}
+  .why-item p{color:var(--ink-soft);font-size:14.8px;}
+
+  /* ---------- GALLERY / KELAS ---------- */
+  .class-grid{
+    display:grid;
+    grid-template-columns:1.6fr 1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    grid-template-areas:
+      "big s1 s1"
+      "big s2 s3";
+    gap:20px;
+  }
+  .class-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:4px;
+    color:#fff;
+    min-height:260px;
+  }
+  .class-card.big{grid-area:big;min-height:540px;}
+  .class-grid > .class-card:nth-child(2){grid-area:s1;}
+  .class-grid > .class-card:nth-child(3){grid-area:s2;}
+  .class-grid > .class-card:nth-child(4){grid-area:s3;}
+  .class-card img{
+    width:100%;height:100%;object-fit:cover;position:absolute;inset:0;
+    transition:transform .6s ease;
+  }
+  .class-card:hover img{transform:scale(1.06);}
+  .class-card .scrim{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(33,28,24,0) 35%, rgba(33,28,24,0.86) 100%);
+  }
+  .class-card .info{
+    position:absolute;left:0;right:0;bottom:0;padding:24px;
+  }
+  .class-card .tag{
+    display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.02em;
+    color:var(--gold-light);margin-bottom:8px;
+  }
+  .class-card h3{
+    color:#fff;font-size:22px;margin-bottom:8px;line-height:1.2;
+  }
+  .class-card.big h3{font-size:28px;}
+  .class-card .meta{
+    display:flex;gap:14px;font-size:13px;color:rgba(255,255,255,0.85);
+  }
+  .class-card .price{
+    margin-top:12px;font-family:'Fraunces',serif;font-size:19px;color:#fff;font-weight:600;
+  }
+  .class-card .price span{
+    font-family:'Manrope',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.7);font-weight:500;
+  }
+  .see-all{font-size:14.5px;font-weight:700;color:var(--red);border-bottom:1px solid var(--red);padding-bottom:2px;}
+
+  /* ---------- STEPS ---------- */
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    position:relative;
+  }
+  .steps::before{
+    content:'';position:absolute;top:34px;left:5%;right:5%;height:1px;
+    background:var(--gold-line);
+    z-index:0;
+  }
+  .step{position:relative;padding-right:32px;z-index:1;}
+  .step .index{
+    font-family:'Fraunces',serif;font-size:44px;font-weight:500;color:var(--paper);
+    -webkit-text-stroke:1.4px var(--gold);
+    background:var(--paper);
+    display:inline-block;padding-right:14px;
+    margin-bottom:20px;
+  }
+  .step h3{font-size:19px;margin-bottom:10px;}
+  .step p{color:var(--ink-soft);font-size:14.8px;max-width:32ch;}
+
+  /* ---------- TESTIMONIAL ---------- */
+  .testi{
+    background:var(--cream);
+  }
+  .testi-inner{
+    max-width:760px;margin:0 auto;text-align:center;
+  }
+  .testi blockquote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,2.6vw,30px);
+    line-height:1.5;color:var(--ink);margin:0 0 28px;
+  }
+  .testi cite{
+    font-style:normal;font-size:14.5px;color:var(--ink-soft);font-weight:600;
+  }
+  .testi cite b{color:var(--red);font-weight:700;}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    background:var(--ink);
+    color:#fff;
+    padding:88px 0;
+  }
+  .cta-inner{
+    display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;
+  }
+  .cta h2{color:#fff;font-size:clamp(28px,3.4vw,42px);max-width:14ch;}
+  .cta p{color:rgba(255,255,255,0.65);margin-top:12px;max-width:40ch;}
+  .cta .btn-solid{background:var(--gold);}
+  .cta .btn-solid:hover{background:var(--gold-light);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);
+    color:rgba(255,255,255,0.6);
+    padding:64px 0 28px;
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+  .foot-grid{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;
+    padding-bottom:48px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  .foot-brand .wordmark{
+    font-family:'Fraunces',serif;color:#fff;font-size:22px;font-weight:600;
+    display:flex;align-items:center;gap:8px;margin-bottom:14px;
+  }
+  .foot-brand .wordmark em{color:var(--gold-light);font-style:normal;}
+  .foot-brand p{font-size:14px;max-width:32ch;color:rgba(255,255,255,0.55);}
+  footer h4{color:#fff;font-size:14px;margin-bottom:18px;font-weight:700;}
+  footer ul li{margin-bottom:11px;font-size:14px;}
+  footer ul li a:hover{color:#fff;}
+  .foot-bottom{
+    padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-size:13px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:920px){
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-media{order:-1;max-width:340px;margin:0 auto;}
+    .why-list{grid-template-columns:1fr;gap:32px;}
+    .why-item{border-left:none;padding:0 0 28px;border-bottom:1px solid var(--line);}
+    .why-item:last-child{border-bottom:none;padding-bottom:0;}
+    .class-grid{grid-template-columns:1fr 1fr;grid-template-areas:"big big" "s1 s1" "s2 s3";}
+    .class-card.big{min-height:360px;}
+    .hero-media .badge{left:12px;}
+    .steps{grid-template-columns:1fr;gap:36px;}
+    .steps::before{display:none;}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:32px;}
+    .foot-brand{grid-column:span 2;}
+  }
+  @media (max-width:600px){
+    .wrap{padding:0 20px;}
+    .nav-inner{padding:0 20px;}
+    section{padding:64px 0;}
+    .hero{padding-top:64px;}
+    .stat-strip{flex-direction:column;}
+    .stat-strip .stat{border-right:none;border-bottom:1px solid var(--line);padding-bottom:16px;}
+    .class-grid{grid-template-columns:1fr;grid-template-areas:"big" "s1" "s2" "s3";}
+    .class-card.big{min-height:320px;}
+    .hero-media .badge{position:static;margin-top:16px;max-width:none;}
+    .cta-inner{flex-direction:column;align-items:flex-start;}
+    .foot-grid{grid-template-columns:1fr;}
+    .foot-brand{grid-column:span 1;}
+  }
+
+  /* mobile nav panel */
+  .mobile-panel{
+    display:none;
+    position:fixed;inset:76px 0 0 0;
+    background:var(--paper);
+    z-index:60;
+    padding:32px;
+    overflow-y:auto;
+  }
+  .mobile-panel.open{display:block;}
+  .mobile-panel a{
+    display:block;font-size:22px;font-family:'Fraunces',serif;padding:14px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .mobile-panel .m-actions{margin-top:28px;display:flex;flex-direction:column;gap:14px;}
+
+  /* hero load animation - single deliberate moment */
+  .hero-anim{
+    animation:riseIn .7s ease both;
+  }
+  .hero-anim.d2{animation-delay:.1s;}
+  .hero-anim.d3{animation-delay:.2s;}
+  @keyframes riseIn{
+    from{opacity:0;transform:translateY(16px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-anim{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <img src="assets/logo.webp" alt="DBN Baking Center">
+    </a>
+    <nav class="nav-links">
+      <a href="#kelas">Kelas</a>
+      <a href="#kenapa">Kenapa DBN</a>
+      <a href="#cara">Cara Belajar</a>
+      <a href="#testimoni">Testimoni</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="#" class="link-plain">Login</a>
+      <a href="#kelas" class="btn btn-solid">Daftar Kelas</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Buka menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#kelas">Kelas</a>
+  <a href="#kenapa">Kenapa DBN</a>
+  <a href="#cara">Cara Belajar</a>
+  <a href="#testimoni">Testimoni</a>
+  <div class="m-actions">
+    <a href="#" class="btn btn-ghost">Login</a>
+    <a href="#kelas" class="btn btn-solid">Daftar Kelas</a>
+  </div>
+</div>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow hero-anim"><span class="dot"></span>DBN Baking Center — sejak 2018</span>
+          <h1 class="hero-anim d2">Belajar baking sungguhan, <em>dari dapur sendiri.</em></h1>
+          <p class="lead hero-anim d3">Kelas video step-by-step untuk membuat croissant, roti artisan, dan cake signature — dibimbing instruktur yang tiap hari kerja di dapur, bukan sekadar di depan kamera.</p>
+          <div class="hero-ctas hero-anim d3">
+            <a href="#kelas" class="btn btn-solid">Lihat Semua Kelas</a>
+            <a href="#" class="btn btn-outline-gold">Login</a>
+          </div>
+        </div>
+        <div class="hero-media hero-anim d2">
+          <div class="frame">
+            <img src="https://images.pexels.com/photos/5903446/pexels-photo-5903446.jpeg?auto=compress&cs=tinysrgb&w=900&h=1125&fit=crop" alt="Tangan menguleni adonan roti di meja dapur">
+          </div>
+          <div class="badge">
+            <span class="num">4.9</span>
+            <span class="txt">Rata-rata rating dari alumni kelas DBN</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat">
+          <span class="num"><span>120+</span></span>
+          <span class="label">Video kelas siap tonton</span>
+        </div>
+        <div class="stat">
+          <span class="num"><span>4.900+</span></span>
+          <span class="label">Alumni yang sudah lulus kelas</span>
+        </div>
+        <div class="stat">
+          <span class="num"><span>18</span></span>
+          <span class="label">Instruktur praktisi bakery</span>
+        </div>
+        <div class="stat">
+          <span class="num"><span>2018</span></span>
+          <span class="label">Mulai mengajar baking online</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kenapa">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Kenapa DBN Baking Center</span>
+          <h2>Dibangun untuk yang serius mau bisa, bukan sekadar nonton.</h2>
+        </div>
+        <p>Tiga hal yang membedakan cara belajar di DBN dari tutorial gratisan di internet.</p>
+      </div>
+
+      <div class="why-list">
+        <div class="why-item">
+          <div class="why-icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 26c0-8 5-16 12-16s12 8 12 16"/>
+              <path d="M6 26h28"/>
+              <path d="M6 26c0 4 3 7 7 7h14c4 0 7-3 7-7"/>
+            </svg>
+          </div>
+          <h3>Video berkualitas, akses selamanya</h3>
+          <p>Tonton kapan saja lewat Google Drive pribadi Anda — akses otomatis aktif begitu pembayaran selesai, tanpa batas waktu tonton ulang.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="20" cy="14" r="6"/>
+              <path d="M9 33c0-7 5-11 11-11s11 4 11 11"/>
+            </svg>
+          </div>
+          <h3>Instruktur yang benar-benar praktisi</h3>
+          <p>Setiap instruktur punya jam terbang di bakery atau pastry kitchen sungguhan — bukan konten kreator yang baru belajar demi bikin video.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="6" width="22" height="28" rx="1"/>
+              <path d="M14 16l4 4 8-8"/>
+            </svg>
+          </div>
+          <h3>Sertifikat setelah kelas selesai</h3>
+          <p>Selesaikan seluruh materi dan kuis akhir untuk dapat sertifikat resmi DBN Baking Center — bisa dipakai melamar kerja di bakery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kelas" style="background:var(--cream);">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Kelas favorit</span>
+          <h2>Empat kelas yang paling banyak diminati bulan ini.</h2>
+        </div>
+        <a href="#" class="see-all">Lihat semua kelas</a>
+      </div>
+
+      <div class="class-grid">
+        <a href="#" class="class-card big">
+          <img src="https://images.pexels.com/photos/2135/food-france-morning-breakfast.jpg?auto=compress&cs=tinysrgb&w=900&h=1100&fit=crop" alt="Croissant butter bertumpuk di atas meja kayu">
+          <div class="scrim"></div>
+          <div class="info">
+            <span class="tag">PEMULA — 12 VIDEO</span>
+            <h3>Croissant Butter Klasik</h3>
+            <div class="meta"><span>Chef Ratna Dewi</span><span>·</span><span>6 jam materi</span></div>
+            <div class="price">Rp349.000 <span>/ akses selamanya</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="class-card">
+          <img src="https://images.pexels.com/photos/1571075/pexels-photo-1571075.jpeg?auto=compress&cs=tinysrgb&w=700&h=700&fit=crop" alt="Roti sourdough dengan kulit renyah di atas rak pendingin">
+          <div class="scrim"></div>
+          <div class="info">
+            <span class="tag">MENENGAH — 9 VIDEO</span>
+            <h3>Roti Sourdough Artisan</h3>
+            <div class="price">Rp429.000</div>
+          </div>
+        </a>
+
+        <a href="#" class="class-card">
+          <img src="https://images.pexels.com/photos/6133313/pexels-photo-6133313.jpeg?auto=compress&cs=tinysrgb&w=700&h=700&fit=crop" alt="Irisan red velvet cake dengan cream cheese frosting">
+          <div class="scrim"></div>
+          <div class="info">
+            <span class="tag">SEMUA LEVEL — 7 VIDEO</span>
+            <h3>Red Velvet Cake Signature</h3>
+            <div class="price">Rp299.000</div>
+          </div>
+        </a>
+
+        <a href="#" class="class-card">
+          <img src="https://images.pexels.com/photos/5903446/pexels-photo-5903446.jpeg?auto=compress&cs=tinysrgb&w=700&h=700&fit=crop" alt="Tangan menguleni adonan roti di meja marmer">
+          <div class="scrim"></div>
+          <div class="info">
+            <span class="tag">PEMULA — 10 VIDEO</span>
+            <h3>Dasar Uleni & Roti Manis</h3>
+            <div class="price">Rp259.000</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="cara">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Cara belajar</span>
+          <h2>Tiga langkah dari daftar sampai bisa bikin sendiri.</h2>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="index">01</span>
+          <h3>Pilih kelas & daftar</h3>
+          <p>Pilih kelas sesuai level dan bahan yang ingin dikuasai, lalu selesaikan pembayaran dalam satu langkah.</p>
+        </div>
+        <div class="step">
+          <span class="index">02</span>
+          <h3>Tonton kapan saja</h3>
+          <p>Akses video otomatis terbuka di Google Drive Anda — bisa diulang sepuasnya, sesuai jam luang Anda.</p>
+        </div>
+        <div class="step">
+          <span class="index">03</span>
+          <h3>Praktik & dapat sertifikat</h3>
+          <p>Kerjakan kuis akhir setelah praktik di dapur sendiri, lalu unduh sertifikat kelulusan resmi DBN.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testi" id="testimoni">
+    <div class="wrap testi-inner">
+      <blockquote>"Baru dua kelas, croissant saya sudah berlapis rapi. Cara ngajarnya jelas banget, tiap langkah dijelasin alasannya — bukan cuma disuruh ikutin."</blockquote>
+      <cite><b>Rina Amelia</b> — Alumni Kelas Croissant Butter Klasik, Jakarta</cite>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap cta-inner">
+      <div>
+        <h2>Siap mulai belajar baking minggu ini?</h2>
+        <p>Daftar sekarang dan langsung dapat akses ke kelas pertama Anda.</p>
+      </div>
+      <a href="#kelas" class="btn btn-solid">Daftar Gratis Sekarang</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="wordmark">DBN <em>Baking</em> Center</div>
+        <p>Marketplace kelas baking online sejak 2018. Belajar membuat kue, roti, dan pastry langsung dari dapur sendiri.</p>
+      </div>
+      <div>
+        <h4>Kelas</h4>
+        <ul>
+          <li><a href="#">Roti & Bread</a></li>
+          <li><a href="#">Cake & Dessert</a></li>
+          <li><a href="#">Pastry & Croissant</a></li>
+          <li><a href="#">Semua kelas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Perusahaan</h4>
+        <ul>
+          <li><a href="#">Tentang Kami</a></li>
+          <li><a href="#">Jadi Instruktur</a></li>
+          <li><a href="#">Testimoni</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Bantuan</h4>
+        <ul>
+          <li><a href="#">Cara Daftar</a></li>
+          <li><a href="#">Pusat Bantuan</a></li>
+          <li><a href="#">Hubungi Kami</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 DBN Baking Center. Seluruh hak cipta dilindungi.</span>
+      <span>Sejak 2018</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const mobilePanel = document.getElementById('mobilePanel');
+  navToggle.addEventListener('click', () => {
+    mobilePanel.classList.toggle('open');
+  });
+  mobilePanel.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobilePanel.classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>
